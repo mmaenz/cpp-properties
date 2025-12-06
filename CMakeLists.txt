@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 4.0 FATAL_ERROR)
 
-project(cppproperties VERSION 1.0.0)
+project(cppproperties VERSION 0.0.28)
 
 option(ENABLE_TEST "Build all tests." OFF)
 
