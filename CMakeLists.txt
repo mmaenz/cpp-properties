@@ -87,16 +87,6 @@ if(ENABLE_TEST)
         ${CMAKE_CURRENT_SOURCE_DIR}/test/PropertiesUtilsTest.cpp)
     target_link_libraries(cppproperties_unittests PRIVATE cppproperties)
 
-    find_package(GTest 1.7.0)
-    if(GTEST_FOUND)
-        target_include_directories(cppproperties_unittests PUBLIC ${GTEST_INCLUDE_DIRS})
-        target_link_libraries(cppproperties_unittests PRIVATE ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
-    else()
-        add_subdirectory(lib/gtest-1.7.0)
-        target_include_directories(cppproperties_unittests PUBLIC ${gtest_SOURCE_DIR}/include)
-        target_link_libraries(cppproperties_unittests PRIVATE gtest gtest_main)
-    endif()
-
     file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/test/properties
          DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/test/)
 

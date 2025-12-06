@@ -19,45 +19,47 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include <gtest/gtest.h>
+#include "microtest.h"
 #include "PropertiesUtils.h"
 
-using namespace testing;
+
 using namespace cppproperties;
 
-TEST(PropertiesUtils, TestTrim) {
-    EXPECT_EQ("foo", PropertiesUtils::Trim("foo"));
-    EXPECT_EQ("foo", PropertiesUtils::Trim("    foo     "));
-    EXPECT_EQ("foo", PropertiesUtils::Trim("\n  foo   \r\n"));
-    EXPECT_EQ("", PropertiesUtils::Trim("      \n"));
+TEST(TestTrim) {
+    ASSERT_STREQ("foo", PropertiesUtils::Trim("foo"));
+    ASSERT_STREQ("foo", PropertiesUtils::Trim("    foo     "));
+    ASSERT_STREQ("foo", PropertiesUtils::Trim("\n  foo   \r\n"));
+    ASSERT_STREQ("", PropertiesUtils::Trim("      \n"));
 }
 
-TEST(PropertiesUtils, TestIsProperty) {
-    EXPECT_TRUE(PropertiesUtils::IsProperty("key=value"));
-    EXPECT_TRUE(PropertiesUtils::IsProperty("    key   =     value   "));
-    EXPECT_TRUE(PropertiesUtils::IsProperty("    key   ="));
-    EXPECT_FALSE(PropertiesUtils::IsProperty("=value"));
+TEST(TestIsProperty) {
+    ASSERT_TRUE(PropertiesUtils::IsProperty("key=value"));
+    ASSERT_TRUE(PropertiesUtils::IsProperty("    key   =     value   "));
+    ASSERT_TRUE(PropertiesUtils::IsProperty("    key   ="));
+    ASSERT_FALSE(PropertiesUtils::IsProperty("=value"));
 }
 
-TEST(PropertiesUtils, TestParseProperty) {
+TEST(TestParseProperty) {
     std::pair<std::string, std::string> p = PropertiesUtils::ParseProperty("key=value");
-    EXPECT_EQ("key", p.first);
-    EXPECT_EQ("value", p.second);
+    ASSERT_STREQ("key", p.first);
+    ASSERT_STREQ("value", p.second);
 
     p = PropertiesUtils::ParseProperty(" key = value ");
-    EXPECT_EQ("key", p.first);
-    EXPECT_EQ("value ", p.second);
+    ASSERT_STREQ("key", p.first);
+    ASSERT_STREQ("value ", p.second);
 
     p = PropertiesUtils::ParseProperty(" key =  ");
-    EXPECT_EQ("key", p.first);
-    EXPECT_EQ("", p.second);
+    ASSERT_STREQ("key", p.first);
+    ASSERT_STREQ("", p.second);
 }
 
-TEST(PropertiesUtils, TestIsComment) {
-    EXPECT_TRUE(PropertiesUtils::IsComment("# comment"));
-    EXPECT_TRUE(PropertiesUtils::IsComment("   # comment"));
+TEST(TestIsComment) {
+    ASSERT_TRUE(PropertiesUtils::IsComment("# comment"));
+    ASSERT_TRUE(PropertiesUtils::IsComment("   # comment"));
 }
 
-TEST(PropertiesUtils, TestIsEmptyLine) {
-    EXPECT_TRUE(PropertiesUtils::IsEmptyLine("      \r\n"));
+TEST(TestIsEmptyLine) {
+    ASSERT_TRUE(PropertiesUtils::IsEmptyLine("      \r\n"));
 }
+
+TEST_MAIN()

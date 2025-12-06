@@ -19,32 +19,31 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include <gtest/gtest.h>
+#include "microtest.h"
 #include <cstdio>
 #include <algorithm>
 #include "PropertiesParser.h"
 
-using namespace testing;
 using namespace cppproperties;
 
-TEST(PropertiesParser, TestRead) {
+TEST(TestRead) {
     Properties props = PropertiesParser::Read("test/properties/test1.properties");
-    EXPECT_EQ("foo", props.GetProperty("name1"));
-    EXPECT_EQ("hello", props.GetProperty("msg1"));
+    ASSERT_EQ("foo", props.GetProperty("name1"));
+    ASSERT_EQ("hello", props.GetProperty("msg1"));
 
-    EXPECT_EQ("bar", props.GetProperty("name2"));
-    EXPECT_EQ("bye", props.GetProperty("msg2"));
+    ASSERT_EQ("bar", props.GetProperty("name2"));
+    ASSERT_EQ("bye", props.GetProperty("msg2"));
 }
 
-TEST(PropertiesParser, TestReadInvalidFile) {
-    EXPECT_THROW(PropertiesParser::Read("test/properties/test2.properties"), PropertiesException);
+TEST(TestReadInvalidFile) {
+    ASSERT_THROW(PropertiesParser::Read("test/properties/test2.properties"));
 }
 
-TEST(PropertiesParser, TestReadFileNotFound) {
-    EXPECT_THROW(PropertiesParser::Read("somewhere"), PropertiesException);
+TEST(TestReadFileNotFound) {
+    ASSERT_THROW(PropertiesParser::Read("somewhere"));
 }
 
-TEST(PropertiesParser, TestWrite) {
+TEST(TestWrite) {
     Properties inProps;
     inProps.AddProperty("key1", " value1");
     inProps.AddProperty("key2", "value2");
@@ -57,10 +56,10 @@ TEST(PropertiesParser, TestWrite) {
     Properties outProps = PropertiesParser::Read("test/properties/out.properties");
 
     std::vector<std::string> names = outProps.GetPropertyNames();
-    EXPECT_EQ(5, names.size());
-    EXPECT_EQ("value1", outProps.GetProperty("key1"));
-    EXPECT_EQ("value2", outProps.GetProperty("key2"));
-    EXPECT_EQ("value3", outProps.GetProperty("key3"));
-    EXPECT_EQ("value4", outProps.GetProperty("key4"));
-    EXPECT_EQ("value5 ", outProps.GetProperty("key5"));
+    ASSERT_EQ(5, names.size());
+    ASSERT_EQ("value1", outProps.GetProperty("key1"));
+    ASSERT_EQ("value2", outProps.GetProperty("key2"));
+    ASSERT_EQ("value3", outProps.GetProperty("key3"));
+    ASSERT_EQ("value4", outProps.GetProperty("key4"));
+    ASSERT_EQ("value5 ", outProps.GetProperty("key5"));
 }

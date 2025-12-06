@@ -19,63 +19,62 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-#include <gtest/gtest.h>
+#include "microtest.h"
 #include <algorithm>
 #include "Properties.h"
 
 using namespace std;
-using namespace testing;
 using namespace cppproperties;
 
-TEST(Properties, TestAddProperty) {
+TEST(TestAddProperty) {
     Properties props;
     props.AddProperty("key1", "value1");
     props.AddProperty("key2", "value2");
     props.AddProperty("key3", "value3");
-    EXPECT_EQ("value1", props.GetProperty("key1"));
-    EXPECT_EQ("value2", props.GetProperty("key2"));
-    EXPECT_EQ("value3", props.GetProperty("key3"));
-    EXPECT_EQ("default", props.GetProperty("foo", "default"));
-    EXPECT_THROW(props.GetProperty("foo"), PropertyNotFoundException);
+    ASSERT_EQ("value1", props.GetProperty("key1"));
+    ASSERT_EQ("value2", props.GetProperty("key2"));
+    ASSERT_EQ("value3", props.GetProperty("key3"));
+    ASSERT_EQ("default", props.GetProperty("foo", "default"));
+    ASSERT_THROW(props.GetProperty("foo"));
 
     vector<string> names = props.GetPropertyNames();
-    EXPECT_EQ(3, names.size());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key3") != names.end());
+    ASSERT_EQ(3, names.size());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key3") != names.end());
 }
 
-TEST(Properties, TestAddPropertyOvewrite) {
+TEST(TestAddPropertyOvewrite) {
     Properties props;
     props.AddProperty("key1", "value1");
     props.AddProperty("key2", "value2");
     props.AddProperty("key3", "value3");
     props.AddProperty("key3", "value333");
-    EXPECT_EQ("value1", props.GetProperty("key1"));
-    EXPECT_EQ("value2", props.GetProperty("key2"));
-    EXPECT_EQ("value333", props.GetProperty("key3"));
-    EXPECT_EQ("default", props.GetProperty("foo", "default"));
-    EXPECT_THROW(props.GetProperty("foo"), PropertyNotFoundException);
+    ASSERT_EQ("value1", props.GetProperty("key1"));
+    ASSERT_EQ("value2", props.GetProperty("key2"));
+    ASSERT_EQ("value333", props.GetProperty("key3"));
+    ASSERT_EQ("default", props.GetProperty("foo", "default"));
+    ASSERT_THROW(props.GetProperty("foo"));
 
     vector<string> names = props.GetPropertyNames();
-    EXPECT_EQ(3, names.size());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key3") != names.end());
+    ASSERT_EQ(3, names.size());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key3") != names.end());
 }
 
-TEST(Properties, TestRemoveProperty) {
+TEST(TestRemoveProperty) {
     Properties props;
     props.AddProperty("key1", "value1");
     props.AddProperty("key2", "value2");
     props.AddProperty("key3", "value3");
     props.RemoveProperty("key3");
-    EXPECT_THROW(props.RemoveProperty("foo"), PropertyNotFoundException);
-    EXPECT_EQ("value1", props.GetProperty("key1"));
-    EXPECT_EQ("value2", props.GetProperty("key2"));
+    ASSERT_THROW(props.RemoveProperty("foo"));
+    ASSERT_EQ("value1", props.GetProperty("key1"));
+    ASSERT_EQ("value2", props.GetProperty("key2"));
 
     vector<string> names = props.GetPropertyNames();
-    EXPECT_EQ(2, names.size());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
-    EXPECT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
+    ASSERT_EQ(2, names.size());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key1") != names.end());
+    ASSERT_TRUE(find(names.begin(), names.end(), "key2") != names.end());
 }

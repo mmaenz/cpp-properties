@@ -77,7 +77,7 @@ void PropertiesParser::Write(const std::string& file, const Properties& props) {
         const std::vector<std::string>& keys = props.GetPropertyNames();
         for (std::vector<std::string>::const_iterator i = keys.begin();
             i != keys.end(); ++i) {
-            os << *i << " = " << props.GetProperty(*i) << std::endl;
+            os << *i << "=" << props.GetProperty(*i) << std::endl;
         }
         os.close();
     } catch (...) {
